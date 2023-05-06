@@ -22,7 +22,7 @@ function onSubmit(evt) {
   evt.preventDefault();
   gallery.innerHTML = '';
   loadMore.hidden = true;
-  pageCounter = 12;
+  pageCounter = 1;
   inputVal = '';
 
   const input = searchForm[0];
