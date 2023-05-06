@@ -22,7 +22,7 @@ function onSubmit(evt) {
   evt.preventDefault();
   gallery.innerHTML = '';
   loadMore.hidden = true;
-  pageCounter = 1;
+  pageCounter = 12;
   inputVal = '';
 
   const input = searchForm[0];
@@ -46,6 +46,7 @@ async function getImage(input, ammount) {
 
     const totalHits = response.data.totalHits;
     const arr = response.data.hits;
+    console.log(pageCounter * 40, totalHits, arr)
     if (pageCounter * 40 <= totalHits) {
       markup(arr, ammount);
       loadMore.hidden = false;
@@ -61,6 +62,7 @@ async function getImage(input, ammount) {
     }
     if (pageCounter * 40 >= totalHits) {
       loadMore.hidden = true;
+      markup(arr, ammount)
       Notify.info("We're sorry, but you've reached the end of search results.");
     }
   } catch (err) {

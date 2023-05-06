@@ -3,6 +3,12 @@
   --animation-duration: 250ms;
 }
 
+.container{
+  width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 .search-form-style {
   display: flex;
