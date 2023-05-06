@@ -46,7 +46,7 @@ async function getImage(input, ammount) {
 
     const totalHits = response.data.totalHits;
     const arr = response.data.hits;
-    
+
     if (pageCounter * 40 <= totalHits) {
       markup(arr, ammount);
       loadMore.hidden = false;
@@ -62,7 +62,7 @@ async function getImage(input, ammount) {
     }
     if (pageCounter * 40 >= totalHits) {
       loadMore.hidden = true;
-      markup(arr, ammount)
+      markup(arr, ammount);
       Notify.info("We're sorry, but you've reached the end of search results.");
     }
   } catch (err) {
