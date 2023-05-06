@@ -46,7 +46,7 @@ async function getImage(input, ammount) {
 
     const totalHits = response.data.totalHits;
     const arr = response.data.hits;
-    console.log(pageCounter * 40, totalHits, arr)
+    
     if (pageCounter * 40 <= totalHits) {
       markup(arr, ammount);
       loadMore.hidden = false;
