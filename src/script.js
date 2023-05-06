@@ -14,6 +14,7 @@ const gallery = document.querySelector('.gallery');
 const loadMore = document.querySelector('.load-more');
 let pageCounter;
 let inputVal;
+let smoothAmmount;
 
 searchForm.addEventListener('submit', onSubmit);
 loadMore.addEventListener('click', onLoadMore);
@@ -28,17 +29,18 @@ function onSubmit(evt) {
   const input = searchForm[0];
   input.value = input.value.trim();
   inputVal = input.value.split(' ').join('+');
-
-  getImage(inputVal, 50);
+  smoothAmmount = 50;
+  getImage(inputVal);
 }
 
 function onLoadMore(evt) {
   evt.preventDefault();
   pageCounter += 1;
-  getImage(inputVal, -81);
+  smoothAmmount = -81;
+  getImage(inputVal);
 }
 
-async function getImage(input, ammount) {
+async function getImage(input) {
   try {
     const response = await axios.get(
       `${BASE_URL}?key=${KEY}&q=${input}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${pageCounter}`
@@ -48,7 +50,7 @@ async function getImage(input, ammount) {
     const arr = response.data.hits;
 
     if (pageCounter * 40 <= totalHits) {
-      markup(arr, ammount);
+      markup(arr);
       loadMore.hidden = false;
     }
     if (arr.length < 1) {
@@ -62,7 +64,7 @@ async function getImage(input, ammount) {
     }
     if (pageCounter * 40 >= totalHits) {
       loadMore.hidden = true;
-      markup(arr, ammount);
+      markup(arr);
       Notify.info("We're sorry, but you've reached the end of search results.");
     }
   } catch (err) {
@@ -70,7 +72,7 @@ async function getImage(input, ammount) {
   }
 }
 
-function markup(arr, ammount) {
+function markup(arr) {
   let mark = '';
   arr.map(
     ({
@@ -108,7 +110,7 @@ function markup(arr, ammount) {
 
   gallery.insertAdjacentHTML('beforeend', mark);
   lightbox.refresh();
-  smoothScroll(ammount);
+  smoothScroll(smoothAmmount);
 }
 
 function smoothScroll(ammount) {
